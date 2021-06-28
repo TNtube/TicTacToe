@@ -1,10 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <map>
-#include <chrono>
 #include <thread>
 #include <random>
-#include <sstream>
 #include <array>
 
 
@@ -82,10 +79,11 @@ int main() {
 
     for(int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++){
-            std::stringstream ss {};
-            ss << "ABC"[i] << "123"[j];
-            game[ss.str()] = " ";
-            locations.push_back(ss.str());
+            std::string coord {};
+            coord.push_back("ABC"[i]);
+            coord.push_back("123"[i]);
+            game[coord] = " ";
+            locations.push_back(coord);
         }
     }
 
