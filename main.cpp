@@ -53,29 +53,23 @@ bool endGame(std::map<std::string, std::string> & game, std::string & choice){
     const std::array<std::string, 3> lines {"A", "B", "C"};
     const std::array<std::string, 3> columns {"1", "2", "3"};
 
-    char l = choice[0];
-    char c = choice[1];
+    const char l = choice[0];
+    const char c = choice[1];
 
     std::array<std::string, 3> line {};
     for (int i = 0; i < 3; i++) {
-        std::stringstream ss {};
-        ss << l << columns[i];
-        line[i] = ss.str();
+        line[i] = std::string(1, l).append(columns[i]);
     }
 
     std::array<std::string, 3> col {};
     for (int i = 0; i < 3; i++) {
-        std::stringstream ss {};
-        ss << lines[i] << c;
-        col[i] = ss.str();
+        col[i] = std::string(lines[i]).append(1, c);
     }
 
-    std::array<std::string, 3> diag1 {"A1","B2","C3"};
-    std::array<std::string, 3> diag2 {"A3","B2","C1"};
     return (count3Marks(game, symbol, line) ||
             count3Marks(game, symbol, col) ||
-            count3Marks(game, symbol, diag1) ||
-            count3Marks(game, symbol, diag2));
+            count3Marks(game, symbol, {"A1","B2","C3"}) || // Diag1
+            count3Marks(game, symbol, {"A3","B2","C1"})); // Diag2
 
 }
 
@@ -134,12 +128,13 @@ int main() {
         std::cout << "[IA] I'm thinking..." << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         std::uniform_int_distribution<> randint(0, (int)locations.size() - 1);
-        int index = randint(gen);
+        const int index = randint(gen);
         std::cout << "[IA] I play at " << locations[index] << std::endl;
         game[locations[index]] = "O";
 
 
         if(endGame(game, locations[index])){
+            display(game);
             std::cout << "You loose, try it an other time" << std::endl;
             break;
         }
