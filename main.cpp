@@ -1,11 +1,11 @@
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <thread>
 #include <random>
 #include <array>
 
 
-void display(std::map<std::string, std::string> & game){
+void display(std::unordered_map<std::string, std::string> & game){
     const std::array<std::string, 3> lines {"A", "B", "C"};
     const std::array<std::string, 3> columns {"1", "2", "3"};
     const std::string sep = "   +---+---+---+";
@@ -31,7 +31,7 @@ void display(std::map<std::string, std::string> & game){
 }
 
 
-bool count3Marks(std::map<std::string, std::string> & game,
+bool count3Marks(std::unordered_map<std::string, std::string> & game,
                  const std::string & symbol, const std::array<std::string, 3> & l){
     int marksCount {};
     for(const auto & element: l){
@@ -44,7 +44,7 @@ bool count3Marks(std::map<std::string, std::string> & game,
 }
 
 
-bool endGame(std::map<std::string, std::string> & game, std::string & choice){
+bool endGame(std::unordered_map<std::string, std::string> & game, std::string & choice){
     const std::string symbol = game[choice];
 
     const std::array<std::string, 3> lines {"A", "B", "C"};
@@ -73,7 +73,7 @@ bool endGame(std::map<std::string, std::string> & game, std::string & choice){
 
 int main() {
 
-    std::map<std::string, std::string> game;
+    std::unordered_map<std::string, std::string> game;
 
     std::vector<std::string> locations;
 
@@ -81,7 +81,7 @@ int main() {
         for (int j = 0; j < 3; j++){
             std::string coord {};
             coord.push_back("ABC"[i]);
-            coord.push_back("123"[i]);
+            coord.push_back("123"[j]);
             game[coord] = " ";
             locations.push_back(coord);
         }
